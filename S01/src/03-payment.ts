@@ -6,15 +6,33 @@
 // 4. Добавьте четвёртый вариант оплаты и посмотрите, где компилятор
 //    покажет незакрытые места.
 
+import {assertNever} from "./01-status";
+
 export type Payment =
     | { kind: "card"; last4: string }
     | { kind: "cash"; amount: number }
-    | { kind: "transfer"; iban: string };
+    | { kind: "transfer"; iban: string }
+    | { kind: "digit_ruble"; biometry: string };
 
 export function describePayment(payment: Payment): string {
-    throw new Error("не реализовано");
+    switch (payment.kind) {
+        case "card":
+            return `Карта: ${payment.last4}`;
+        case "cash":
+            return `Наличные: ${payment.amount}`;
+        case "transfer":
+            return `Перевод: ${payment.iban}`;
+        // case "digit_ruble":
+        //     return `Цифровой рубль: ${payment.biometry}`;
+        default:
+            return assertNever(payment);
+    }
 }
 
 export function total(payments: Payment[]): number {
-    throw new Error("не реализовано");
+    let res = 0;
+    for (const payment of payments)
+        if (payment.kind === "cash")
+            res += payment.amount;
+    return res;
 }
