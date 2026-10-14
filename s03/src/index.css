@@ -8,7 +8,8 @@
     --muted: #555;
     --muted-2: #6b7280;
 
-    --blue: #2563eb;
+    --blue: #104BA1;
+    --light-blue: #C9DFF2;
 
     --card-bg: #fff;
     --card-border: #ddd;
@@ -45,6 +46,14 @@ body {
     font-size: 24px;
 }
 
+.cart-summary {
+    margin-left: auto;
+}
+
+.header button {
+    width: auto;
+}
+
 .search-bar {
     display: flex;
     align-items: center;
@@ -67,7 +76,7 @@ body {
 
 .grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     gap: var(--gap);
 }
 
@@ -116,8 +125,23 @@ button {
 
 button:disabled {
     cursor: not-allowed;
-    opacity: 0.6;
     background-color: #E6E6E6;
     color: grey;
+}
+
+.add {
+    background-color: var(--blue);
+    color: white;
+}
+
+.added {
+    background-color: var(--light-blue);
+    color: var(--text);
+}
+
+.remove {
+    background: none;
+    color: var(--text);
+    border: 1px solid var(--card-border);
 }
 
