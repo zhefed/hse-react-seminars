@@ -1,3 +1,4 @@
+import {memo} from 'react'
 import type {Product} from '../data'
 import {ProductCard} from './ProductCard'
 
@@ -8,7 +9,7 @@ type Props = {
     onRemove: (id: number) => void
 }
 
-export function ProductList({products, quantityById, onAdd, onRemove}: Props) {
+export const ProductList = memo(function ProductList({products, quantityById, onAdd, onRemove}: Props) {
     return (
         <div className="grid">
             {products.map((p) => (
@@ -22,4 +23,4 @@ export function ProductList({products, quantityById, onAdd, onRemove}: Props) {
             ))}
         </div>
     )
-}
+})

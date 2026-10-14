@@ -1,24 +1,32 @@
-import {useCallback, useEffect, useMemo, useReducer, useRef, useState} from 'react'
+import {type ChangeEvent, useEffect, useMemo, useRef, useState, useTransition} from 'react'
 import {ProductList} from './components/ProductList'
 import {SearchBar} from './components/SearchBar'
-import {type Product, products} from './data'
-import {cartReducer, initialCart} from './cart'
+import {products} from './data'
 import {Header} from './components/Header'
+import {useCart} from './useCart'
 
 function App() {
-    const [query, setQuery] = useState('')
+    const [query, setQuery] = useState('') // поле ввода
+    const [filter, setFilter] = useState('') // для списка
     const [onlyInStock, setOnlyInStock] = useState(false)
-    const [cart, dispatch] = useReducer(cartReducer, initialCart)
+    const [isPending, startTransition] = useTransition()
+    const {items, totalCount, totalPrice, add, remove, clear} = useCart()
+
+    function handleSearch(e: ChangeEvent<HTMLInputElement>) {
+        const value = e.target.value
+        setQuery(value)
+        startTransition(() => setFilter(value))
+    }
 
     // список пересчитывается только при смене фильтров
     const visible = useMemo(() => {
-        const q = query.trim().toLowerCase()
+        const q = filter.trim().toLowerCase()
 
         return products.filter(
             (p) =>
                 (!onlyInStock || p.inStock) && p.title.toLowerCase().includes(q),
         )
-    }, [query, onlyInStock])
+    }, [filter, onlyInStock])
 
     // автофокус: ref на <input> + эффект с []
     const inputRef = useRef<HTMLInputElement>(null)
@@ -26,39 +34,33 @@ function App() {
         inputRef.current?.focus()
     }, [])
 
-    const totalCount = cart.items.reduce((sum, item) => sum + item.qty, 0)
-    const totalPrice = cart.items.reduce((sum, item) => sum + item.price * item.qty, 0)
-
     const quantityById = useMemo(() => {
         const map: Record<number, number> = {}
-        for (const item of cart.items) map[item.id] = item.qty
+        for (const item of items) map[item.id] = item.qty
         return map
-    }, [cart.items])
-
-    const onAdd = useCallback((product: Product) => dispatch({type: 'add', product}), [])
-    const onRemove = useCallback((id: number) => dispatch({type: 'remove', id}), [])
-    const onClear = useCallback(() => dispatch({type: 'clear'}), [])
+    }, [items])
 
     return (
         <div className="page">
             <Header
                 totalCount={totalCount}
                 totalPrice={totalPrice}
-                onClear={onClear}
+                onClear={clear}
             />
             <SearchBar
                 query={query}
-                onQueryChange={setQuery}
+                onQueryChange={handleSearch}
                 onlyInStock={onlyInStock}
                 onOnlyInStockChange={setOnlyInStock}
                 found={visible.length}
                 inputRef={inputRef}
             />
+            <div className="pending">{isPending && 'Обновляем список…'}</div>
             <ProductList
                 products={visible}
                 quantityById={quantityById}
-                onAdd={onAdd}
-                onRemove={onRemove}
+                onAdd={add}
+                onRemove={remove}
             />
         </div>
     )

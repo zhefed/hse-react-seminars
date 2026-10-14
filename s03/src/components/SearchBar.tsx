@@ -1,8 +1,8 @@
-import type {Ref} from 'react'
+import type {ChangeEvent, Ref} from 'react'
 
 type Props = {
     query: string
-    onQueryChange: (value: string) => void
+    onQueryChange: (e: ChangeEvent<HTMLInputElement>) => void
     onlyInStock: boolean
     onOnlyInStockChange: (value: boolean) => void
     found: number
@@ -24,7 +24,7 @@ export function SearchBar({
                 type="search"
                 placeholder="Поиск по названию..."
                 value={query}
-                onChange={(e) => onQueryChange(e.target.value)}
+                onChange={onQueryChange}
             />
             <label>
                 <input
