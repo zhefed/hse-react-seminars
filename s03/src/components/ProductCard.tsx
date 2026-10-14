@@ -1,3 +1,4 @@
+import {memo} from 'react'
 import type {Product} from '../data'
 
 type Props = {
@@ -7,7 +8,9 @@ type Props = {
     onRemove: (id: number) => void
 }
 
-export function ProductCard({product, quantity, onAdd, onRemove}: Props) {
+export const ProductCard = memo(function ProductCard({product, quantity, onAdd, onRemove}: Props) {
+    console.log('render', product.id)
+
     return (
         <div className="card">
             <div className="card-title">{product.title}</div>
@@ -38,4 +41,4 @@ export function ProductCard({product, quantity, onAdd, onRemove}: Props) {
             </div>
         </div>
     )
-}
+})

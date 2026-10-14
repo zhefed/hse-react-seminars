@@ -1,7 +1,7 @@
-import {useEffect, useMemo, useReducer, useRef, useState} from 'react'
+import {useCallback, useEffect, useMemo, useReducer, useRef, useState} from 'react'
 import {ProductList} from './components/ProductList'
 import {SearchBar} from './components/SearchBar'
-import {products} from './data'
+import {type Product, products} from './data'
 import {cartReducer, initialCart} from './cart'
 import {Header} from './components/Header'
 
@@ -29,12 +29,22 @@ function App() {
     const totalCount = cart.items.reduce((sum, item) => sum + item.qty, 0)
     const totalPrice = cart.items.reduce((sum, item) => sum + item.price * item.qty, 0)
 
+    const quantityById = useMemo(() => {
+        const map: Record<number, number> = {}
+        for (const item of cart.items) map[item.id] = item.qty
+        return map
+    }, [cart.items])
+
+    const onAdd = useCallback((product: Product) => dispatch({type: 'add', product}), [])
+    const onRemove = useCallback((id: number) => dispatch({type: 'remove', id}), [])
+    const onClear = useCallback(() => dispatch({type: 'clear'}), [])
+
     return (
         <div className="page">
             <Header
                 totalCount={totalCount}
                 totalPrice={totalPrice}
-                onClear={() => dispatch({type: 'clear'})}
+                onClear={onClear}
             />
             <SearchBar
                 query={query}
@@ -46,9 +56,9 @@ function App() {
             />
             <ProductList
                 products={visible}
-                cartItems={cart.items}
-                onAdd={(product) => dispatch({type: 'add', product})}
-                onRemove={(id) => dispatch({type: 'remove', id})}
+                quantityById={quantityById}
+                onAdd={onAdd}
+                onRemove={onRemove}
             />
         </div>
     )
