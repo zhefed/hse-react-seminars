@@ -1,0 +1,130 @@
+* {
+    box-sizing: border-box;
+}
+
+:root {
+    --bg: #f6f6f8;
+    --text: #222;
+    --muted: #555;
+    --muted-2: #6b7280;
+
+    --blue: #104BA1;
+    --light-blue: #C9DFF2;
+
+    --card-bg: #fff;
+    --card-border: #ddd;
+    --error: #b42318;
+    --stock-in: #1a7f37;
+
+    --radius: 8px;
+    --gap: 12px;
+    --max-width: 1080px;
+}
+
+body {
+    margin: 0;
+    font-family: system-ui;
+    color: var(--text);
+    background-color: var(--bg);
+}
+
+.page {
+    width: 100%;
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 16px;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 16px;
+}
+
+.header h1 {
+    margin: 0;
+    font-size: 24px;
+}
+
+.nav {
+    display: flex;
+    gap: 8px;
+}
+
+.header button {
+    width: auto;
+}
+
+.logout {
+    margin-left: auto;
+}
+
+h2 {
+    margin: 0 0 12px;
+    font-size: 20px;
+}
+
+form,
+.card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius);
+    padding: 12px;
+}
+
+input,
+textarea {
+    padding: 8px 10px;
+    font-size: 15px;
+    font-family: inherit;
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius);
+}
+
+p {
+    color: var(--muted);
+}
+
+button {
+    padding: 6px 10px;
+    cursor: pointer;
+    border: none;
+    width: -webkit-fill-available;
+    background-color: var(--blue);
+    color: white;
+}
+
+button:disabled {
+    cursor: not-allowed;
+    background-color: #E6E6E6;
+    color: grey;
+}
+
+.tab {
+    background-color: var(--light-blue);
+    color: var(--text);
+}
+
+.tab.active {
+    background-color: var(--blue);
+    color: white;
+}
+
+.tab:disabled {
+    background-color: #E6E6E6;
+    color: grey;
+}
+
+.logout {
+    background: none;
+    color: var(--text);
+    border: 1px solid var(--card-border);
+}
+
+.message-input {
+    field-sizing: content;
+    min-height: 0;
+    max-height: 160px;
+    resize: none;
+}
