@@ -1,0 +1,15 @@
+// Дизайн-токены. Подключаются через @use, а не @import (@import в Sass устарел).
+$colors: (
+  primary: #3b5bdb,
+  danger: #d6336c,
+  text: #14161a,
+  border: #d9dde3,
+  surface: #ffffff,
+);
+
+$radius: 10px;
+
+$breakpoints: (
+  sm: 480px,
+  md: 768px,
+);

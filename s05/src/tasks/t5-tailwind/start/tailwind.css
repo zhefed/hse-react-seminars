@@ -1,0 +1,16 @@
+/* Tailwind v4: конфиг пишется в CSS, tailwind.config.js не нужен.
+   Preflight (сброс стилей) отключён, чтобы не задевать другие задания —
+   в обычном проекте достаточно одной строки: @import "tailwindcss"; */
+@layer theme, base, components, utilities;
+@import 'tailwindcss/theme.css' layer(theme);
+@import 'tailwindcss/utilities.css' layer(utilities);
+
+/* dark: срабатывает по атрибуту data-theme="dark", а не по системной настройке */
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+
+/* Собственные токены: из --color-brand получаются классы bg-brand, text-brand, border-brand… */
+@theme {
+  --color-brand: #3b5bdb;
+  --color-brand-hover: #2f4ac0;
+  --radius-card: 16px;
+}

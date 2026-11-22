@@ -1,0 +1,21 @@
+.card {
+  composes: card-base from './card-base.module.css';
+  border: 1px solid #d9dde3;
+  background: #fff;
+}
+
+.active {
+  border-color: #3b5bdb;
+  box-shadow: 0 0 0 3px rgb(59 91 219 / 20%);
+}
+
+.title {
+  margin: 8px 0;
+  font-size: 18px;
+  font-weight: 700;
+  color: #14161a;
+}
+
+.price {
+  color: #5b6270;
+}

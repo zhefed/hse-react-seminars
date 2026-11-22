@@ -1,0 +1,102 @@
+@use 'sass:map';
+@use 'sass:color';
+@use './tokens' as t;
+
+@mixin focus-ring($color) {
+  &:focus-visible {
+    outline: 2px solid $color;
+    outline-offset: 2px;
+  }
+}
+
+@mixin respond($bp) {
+  @media (min-width: map.get(t.$breakpoints, $bp)) {
+    @content;
+  }
+}
+
+$variants: (
+  primary: (
+    background: map.get(t.$colors, primary),
+    color: #fff,
+    border: map.get(t.$colors, primary),
+    hover: color.scale(map.get(t.$colors, primary), $lightness: -12%),
+  ),
+  secondary: (
+    background: map.get(t.$colors, surface),
+    color: map.get(t.$colors, text),
+    border: map.get(t.$colors, border),
+    hover: color.scale(map.get(t.$colors, surface), $lightness: -4%),
+  ),
+  danger: (
+    background: map.get(t.$colors, danger),
+    color: #fff,
+    border: map.get(t.$colors, danger),
+    hover: color.scale(map.get(t.$colors, danger), $lightness: -12%),
+  ),
+);
+
+$sizes: (
+  sm: (
+    height: 32px,
+    padding: 0 12px,
+    font-size: 12px,
+  ),
+  md: (
+    height: 40px,
+    padding: 0 16px,
+    font-size: 14px,
+  ),
+  lg: (
+    height: 48px,
+    padding: 0 20px,
+    font-size: 16px,
+  ),
+);
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  border: 1px solid transparent;
+  border-radius: t.$radius;
+  font: inherit;
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+
+  @include focus-ring(map.get(t.$colors, primary));
+
+  @include respond(sm) {
+    width: auto;
+  }
+}
+
+@each $variant, $token in $variants {
+  .#{$variant} {
+    background: map.get($token, background);
+    color: map.get($token, color);
+    border-color: map.get($token, border);
+
+    &:hover:not(:disabled) {
+      background: map.get($token, hover);
+    }
+  }
+}
+
+@each $size, $token in $sizes {
+  .#{$size} {
+    height: map.get($token, height);
+    padding: map.get($token, padding);
+    font-size: map.get($token, font-size);
+  }
+}
+
+.button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.button:disabled:hover {
+  background: inherit;
+}

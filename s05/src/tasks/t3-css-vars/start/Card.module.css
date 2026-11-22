@@ -1,0 +1,31 @@
+.page {
+  min-height: 100vh;
+  padding: 24px;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: system-ui, sans-serif;
+}
+
+.card {
+  max-width: 360px;
+  padding: 20px;
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  background: var(--color-surface);
+  color: var(--color-text);
+}
+
+.muted {
+  color: var(--color-muted);
+}
+
+.button {
+  margin-top: 12px;
+  padding: 8px 14px;
+  border: 0;
+  border-radius: 8px;
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+  font: inherit;
+  cursor: pointer;
+}

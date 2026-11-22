@@ -1,0 +1,13 @@
+/* Другой разработчик, другой компонент — те же имена классов */
+.card {
+  composes: card-base from './card-base.module.css';
+  border: 2px dashed #e8590c;
+  background: #fff4e6;
+}
+
+.title {
+  margin: 0;
+  font-size: 13px;
+  text-transform: uppercase;
+  color: crimson;
+}
